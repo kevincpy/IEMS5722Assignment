@@ -30,6 +30,22 @@
         android:textAlignment="center"
         android:textSize="24dp" />
 
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tcp_submit_button"
+        android:textAlignment="center"
+        android:textSize="24dp" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/http_submit_button"
+        android:textAlignment="center"
+        android:textSize="24dp" />
+
     <TextView
         android:id="@+id/text1"
         android:layout_width="fill_parent"
@@ -52,20 +68,6 @@
         android:textAlignment="center"
         android:textSize="24dp" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/tcp_submit_button"
-        android:textAlignment="center"
-        android:textSize="24dp" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/http_submit_button"
-        android:textAlignment="center"
-        android:textSize="24dp" />
 
 </LinearLayout>
