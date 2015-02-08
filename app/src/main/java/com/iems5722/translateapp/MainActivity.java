@@ -30,7 +30,6 @@ public class MainActivity extends Activity {
     Button b4;
     EditText e1;
     TextView t1;
-    private ProgressDialog pd = null;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,15 +90,13 @@ public class MainActivity extends Activity {
         // show some feedback to user: translated text, error message, dialog etc
         if (input.trim().equals("")) {
             Toast.makeText(MainActivity.this, "Empty Input", Toast.LENGTH_SHORT).show();
-            return;
         }
 
         if(word != null){
-            t1.setText(word.toString());
+            t1.setText(word);
         }
         else {
             Toast.makeText(MainActivity.this, "Translate Error", Toast.LENGTH_SHORT).show();
-            return;
         }
 
 	}
@@ -116,7 +113,7 @@ public class MainActivity extends Activity {
         }
 
         if(word != null){
-            t1.setText(word.toString());
+            t1.setText(word);
         }
         else {
             Toast.makeText(MainActivity.this, "Translate Error", Toast.LENGTH_SHORT).show();
@@ -126,7 +123,7 @@ public class MainActivity extends Activity {
 
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "Translate result is " + "\" " + input + " -> " + word.toString() +" \" !" + "\n\n### From TranslateApp ### ");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Translate result is " + "\" " + input + " -> " + word +" \" !" + "\n\n### From TranslateApp ### ");
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
     }
