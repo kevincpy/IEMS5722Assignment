@@ -1,0 +1,4 @@
+/Users/Kevin/AndroidStudioProjects/TranslateApp1/app/build/intermediates/classes/debug
+/Users/Kevin/AndroidStudioProjects/TranslateApp1/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-3e1d3a7efc3638a3c78d12851af05c87466d9fc7.jar
+/Users/Kevin/AndroidStudioProjects/TranslateApp1/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-7c477dc117877a327630c77bcb1be90d1c79bf55.jar
+/Users/Kevin/AndroidStudioProjects/TranslateApp1/app/build/intermediates/pre-dexed/debug/classes-7a0d155d63a133a6ccb962235c2b6eafe2d5c46c.jar
