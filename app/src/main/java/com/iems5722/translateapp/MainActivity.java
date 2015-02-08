@@ -16,6 +16,7 @@ import android.app.AlertDialog;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.InetAddress;
@@ -131,39 +132,48 @@ public class MainActivity extends Activity {
     private void TcpClient() {
         String hostname = "iems5722v.ie.cuhk.edu.hk";
         int serverPort = 3001;
+        Socket client = null;
+        String input = "";
+        DataOutputStream out = null;
+        DataInputStream in = null;
+        String ServerResponse = "";
+        input = e1.getText().toString();
+        if (input.trim().equals("")) {
+            Toast.makeText(MainActivity.this, "Empty Input", Toast.LENGTH_SHORT).show();
+            return;
+        }
         try {
-            Socket client = new Socket(hostname, serverPort);
+            client = new Socket(hostname, serverPort);
             System.out.println("Just connected to " + client.getRemoteSocketAddress());
-        } catch (UnknownHostException e) {
+
+        }
+        catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if (client.isConnected()) {
+            try{
+                out = new DataOutputStream(client.getOutputStream());
+                System.out.println("Send Request to Server: " + input);
+                out.writeUTF(input + client.getLocalAddress());
+                out.flush();
+                client.setSoTimeout(5000);
+                in = new DataInputStream(client.getInputStream());
+                ServerResponse = in.readUTF();
+                Toast.makeText(MainActivity.this, "Translate Result: " + ServerResponse, Toast.LENGTH_SHORT).show();
+                client.close();
+            }
+            catch (UnknownHostException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
     }
-//            try {
-//
-//                DataOutputStream out = new DataOutputStream(client.getOutputStream());
-//                out.writeUTF(input + client.getLocalSocketAddress());
-//                DataInputStream in = new DataInputStream(client.getInputStream());
-//                Toast.makeText(MainActivity.this, "Translate Result: " + in.readUTF(), Toast.LENGTH_SHORT).show();
-//                client.close();
-//            }
 
-
-
-
-
-//        try {
-//            client = new Socket(serverAddr, serverPort);
-//
-//            alertDialogBuilder.setMessage("Just connected to" + client.getRemoteSocketAddress());
-//        }
-//        catch (UnknownHostException e) {
-//            e.printStackTrace();
-//        }
-//        catch (IOException e) {
-//            e.printStackTrace();
-//        }
 
 
 	// Options menu - not needed for this app
