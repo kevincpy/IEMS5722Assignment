@@ -67,24 +67,29 @@ public class MainActivity extends Activity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        final ProgressDialog ringProgressDialog = new ProgressDialog(MainActivity.this);
-                        ringProgressDialog.setTitle("Connecting");
-                        ringProgressDialog.show();
-                        ringProgressDialog.setCancelable(false);
-                        TcpClient();
-                        ringProgressDialog.dismiss();
+                        TranslateJob("tcp");
                     }
                 }
         );
+        b4.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        TranslateJob("http");
+                    }
+                }
+        );
+
+
     }
 
 
     // translate look up
-	private void translateText() {
+    private void translateText() {
         // get user input
         String input = e1.getText().toString();
 
-		// try get word out of dictionary
+        // try get word out of dictionary
         WordDictionary wd = new WordDictionary();
         String word = wd.wordDict.get(input);
         // show some feedback to user: translated text, error message, dialog etc
@@ -99,12 +104,11 @@ public class MainActivity extends Activity {
             Toast.makeText(MainActivity.this, "Translate Error", Toast.LENGTH_SHORT).show();
         }
 
-	}
+    }
     // share the translate result
     private void shareResult() {
         String input = e1.getText().toString();
-        WordDictionary wd = new WordDictionary();
-        String word = wd.wordDict.get(input);
+        String word = t1.getText().toString();
 
         // show some feedback to user: translated text, error message, dialog etc
         if (input.trim().equals("")) {
@@ -112,67 +116,28 @@ public class MainActivity extends Activity {
             return;
         }
 
-        if(word != null){
-            t1.setText(word);
+        if(!word.isEmpty()){
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Translate result is " + "\" " + input + " -> " + word +" \" !" + "\n\n### From TranslateApp ### ");
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
         }
         else {
-            Toast.makeText(MainActivity.this, "Translate Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Please press Translate", Toast.LENGTH_SHORT).show();
             return;
         }
 
 
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "Translate result is " + "\" " + input + " -> " + word +" \" !" + "\n\n### From TranslateApp ### ");
-        sendIntent.setType("text/plain");
-        startActivity(sendIntent);
-    }
-	// TCP client
-    private void TcpClient() {
-        String hostname = "iems5722v.ie.cuhk.edu.hk";
-        int serverPort = 3001;
-        String input = "";
-        String ServerResponse = "";
-        input = e1.getText().toString();
-        if (input.trim().equals("")) {
-            Toast.makeText(MainActivity.this, "Empty Input", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        try {
-            Socket client = new Socket(hostname, serverPort);
-            System.out.println("Just connected to " + client.getRemoteSocketAddress());
-            if (client.isConnected()) {
-                PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-                System.out.println("Send Request to Server: " + input);
-                out.print(input);
-                out.flush();
-                client.setSoTimeout(5000);
-                BufferedReader  in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-                while (!in.ready()) {
-                    ServerResponse = in.readLine();
-                    System.out.println("Translate Result: " + ServerResponse);
-                    if (ServerResponse == "Translate Error"){
-                        Toast.makeText(MainActivity.this, "Translate Error", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    t1.setText(ServerResponse);
-                    in.close();
-                    out.close();
-                    client.close();
-                }
-
-            }
-
-        }
-        catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 
+    private void TranslateJob(String mode){
+        String input = e1.getText().toString();
+
+        new TranslateTask().execute(mode, input);
+
+    }
 
 
 	// Options menu - not needed for this app
@@ -194,4 +159,77 @@ public class MainActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+    private class TranslateTask extends AsyncTask<String, Void, String> {
+        //final ProgressDialog ringProgressDialog = new ProgressDialog(MainActivity.this);
+        protected String doInBackground(String... Strings){
+            String mode = Strings[0];
+            String input = Strings[1];
+            String ServerResponse = "";
+
+            if (input.trim().equals("")) {
+                return "Empty Input";
+            }
+            System.out.println("Mode: " + mode);
+//            ringProgressDialog.setTitle("Connecting");
+//            ringProgressDialog.show();
+//            ringProgressDialog.setCancelable(false);
+
+            if (mode.equals("tcp")){
+                String hostname = "iems5722v.ie.cuhk.edu.hk";
+                int serverPort = 3001;
+                System.out.println("Try connected to " + hostname + " : " + serverPort);
+                try {
+                    Socket client = new Socket(hostname, serverPort);
+                    System.out.println("Just connected to " + client.getRemoteSocketAddress());
+                    if (client.isConnected()) {
+                        PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+                        System.out.println("Send Request to Server: " + input);
+                        out.print(input);
+                        out.flush();
+                        client.setSoTimeout(5000);
+                        BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                        while (!in.ready()) {
+                            ServerResponse = in.readLine();
+                            System.out.println("Translate Result: " + ServerResponse);
+                            in.close();
+                            out.close();
+                            client.close();
+                            return ServerResponse;
+                        }
+                    }
+                }
+                catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            if (mode.equals("http")){
+
+            }
+            return null;
+        }
+
+        protected void onProgressUpdate(){
+//
+//            ringProgressDialog.dismiss();
+        }
+
+        protected void onPostExecute(String result){
+            if (result.equals("Empty Input") || result.equals("Translate Error")) {
+                Toast.makeText(MainActivity.this, result, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            t1.setText(result);
+            return;
+
+        }
+    }
+
 }
+
+
