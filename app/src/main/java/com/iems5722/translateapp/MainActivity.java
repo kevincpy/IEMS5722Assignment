@@ -3,6 +3,7 @@ package com.iems5722.translateapp;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,6 +14,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.app.AlertDialog;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -95,13 +105,17 @@ public class MainActivity extends Activity {
         // show some feedback to user: translated text, error message, dialog etc
         if (input.trim().equals("")) {
             Toast.makeText(MainActivity.this, "Empty Input", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         if(word != null){
             t1.setText(word);
+            return;
         }
         else {
             Toast.makeText(MainActivity.this, "Translate Error", Toast.LENGTH_SHORT).show();
+            t1.setText("Translate Error");
+            return;
         }
 
     }
@@ -171,9 +185,6 @@ public class MainActivity extends Activity {
                 return "Empty Input";
             }
             System.out.println("Mode: " + mode);
-//            ringProgressDialog.setTitle("Connecting");
-//            ringProgressDialog.show();
-//            ringProgressDialog.setCancelable(false);
 
             if (mode.equals("tcp")){
                 String hostname = "iems5722v.ie.cuhk.edu.hk";
@@ -208,19 +219,40 @@ public class MainActivity extends Activity {
 
             }
             if (mode.equals("http")){
+                String url = "http://iems5722v.ie.cuhk.edu.hk:8080/translate.php?word=" + input;
+                System.out.println("URL: " + url);
+                HttpClient http_client = new DefaultHttpClient();
+                HttpGet request = new HttpGet(url);
+                try{
+                    HttpResponse response = http_client.execute(request);
+                    System.out.println("Get Server response!");
+                    HttpEntity entity = response.getEntity();
+                    ServerResponse = EntityUtils.toString(entity, HTTP.UTF_8);
+                    return ServerResponse;
+                }
+                catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+
 
             }
             return null;
         }
 
         protected void onProgressUpdate(){
-//
-//            ringProgressDialog.dismiss();
         }
 
         protected void onPostExecute(String result){
-            if (result.equals("Empty Input") || result.equals("Translate Error")) {
+            if (result.equals("Empty Input")) {
                 Toast.makeText(MainActivity.this, result, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (result.equals("Translate Error")) {
+                Toast.makeText(MainActivity.this, result, Toast.LENGTH_SHORT).show();
+                t1.setText(result);
                 return;
             }
 
