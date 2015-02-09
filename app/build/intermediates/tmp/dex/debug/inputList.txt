@@ -1,4 +1,4 @@
-/Users/Kevin/AndroidStudioProjects/TranslateApp1/app/build/intermediates/classes/debug
-/Users/Kevin/AndroidStudioProjects/TranslateApp1/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-3e1d3a7efc3638a3c78d12851af05c87466d9fc7.jar
-/Users/Kevin/AndroidStudioProjects/TranslateApp1/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-7c477dc117877a327630c77bcb1be90d1c79bf55.jar
-/Users/Kevin/AndroidStudioProjects/TranslateApp1/app/build/intermediates/pre-dexed/debug/classes-7a0d155d63a133a6ccb962235c2b6eafe2d5c46c.jar
+C:\Users\chan\Android studioProjects\IEMS5722Assignment\app\build\intermediates\classes\debug
+C:\Users\chan\Android studioProjects\IEMS5722Assignment\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-4798b2bc1e1dd70b4e19fce616e654073b41999c.jar
+C:\Users\chan\Android studioProjects\IEMS5722Assignment\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-cb611d277db36287fb15fe4770e131b405e0003e.jar
+C:\Users\chan\Android studioProjects\IEMS5722Assignment\app\build\intermediates\pre-dexed\debug\classes-8680f0253f019d13ea45ab4d52282b97b8b8dd56.jar

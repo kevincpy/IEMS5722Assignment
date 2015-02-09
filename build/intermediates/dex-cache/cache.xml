@@ -2,25 +2,25 @@
 <items version="2" >
 
     <item
-        jar="/Users/Kevin/AndroidStudioProjects/TranslateApp1/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jar="C:\Users\chan\Android studioProjects\IEMS5722Assignment\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="/Users/Kevin/AndroidStudioProjects/TranslateApp1/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-7c477dc117877a327630c77bcb1be90d1c79bf55.jar" />
+        <dex dex="C:\Users\chan\Android studioProjects\IEMS5722Assignment\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-cb611d277db36287fb15fe4770e131b405e0003e.jar" />
     </item>
     <item
-        jar="/Users/Kevin/AndroidStudioProjects/TranslateApp1/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jar="C:\Users\chan\Android studioProjects\IEMS5722Assignment\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="/Users/Kevin/AndroidStudioProjects/TranslateApp1/app/build/intermediates/pre-dexed/debug/classes-7a0d155d63a133a6ccb962235c2b6eafe2d5c46c.jar" />
+        <dex dex="C:\Users\chan\Android studioProjects\IEMS5722Assignment\app\build\intermediates\pre-dexed\debug\classes-8680f0253f019d13ea45ab4d52282b97b8b8dd56.jar" />
     </item>
     <item
-        jar="/Users/Kevin/android-sdks/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
+        jar="C:\Users\chan\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="/Users/Kevin/AndroidStudioProjects/TranslateApp1/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-3e1d3a7efc3638a3c78d12851af05c87466d9fc7.jar" />
+        <dex dex="C:\Users\chan\Android studioProjects\IEMS5722Assignment\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-4798b2bc1e1dd70b4e19fce616e654073b41999c.jar" />
     </item>
 
 </items>

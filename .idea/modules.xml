@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/IEMS5722Assignment.iml" filepath="$PROJECT_DIR$/IEMS5722Assignment.iml" />
       <module fileurl="file://$PROJECT_DIR$/TranslateApp1.iml" filepath="$PROJECT_DIR$/TranslateApp1.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

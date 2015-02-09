@@ -14,10 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.app.AlertDialog;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -67,13 +71,8 @@ public class MainActivity extends Activity {
                         ringProgressDialog.setTitle("Connecting");
                         ringProgressDialog.show();
                         ringProgressDialog.setCancelable(false);
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                TcpClient();
-                                ringProgressDialog.dismiss();
-                            }
-                        }).start();
+                        TcpClient();
+                        ringProgressDialog.dismiss();
                     }
                 }
         );
@@ -132,10 +131,7 @@ public class MainActivity extends Activity {
     private void TcpClient() {
         String hostname = "iems5722v.ie.cuhk.edu.hk";
         int serverPort = 3001;
-        Socket client = null;
         String input = "";
-        DataOutputStream out = null;
-        DataInputStream in = null;
         String ServerResponse = "";
         input = e1.getText().toString();
         if (input.trim().equals("")) {
@@ -143,35 +139,38 @@ public class MainActivity extends Activity {
             return;
         }
         try {
-            client = new Socket(hostname, serverPort);
+            Socket client = new Socket(hostname, serverPort);
             System.out.println("Just connected to " + client.getRemoteSocketAddress());
+            if (client.isConnected()) {
+                PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+                System.out.println("Send Request to Server: " + input);
+                out.print(input);
+                out.flush();
+                client.setSoTimeout(5000);
+                BufferedReader  in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                while (!in.ready()) {
+                    ServerResponse = in.readLine();
+                    System.out.println("Translate Result: " + ServerResponse);
+                    if (ServerResponse == "Translate Error"){
+                        Toast.makeText(MainActivity.this, "Translate Error", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    t1.setText(ServerResponse);
+                    in.close();
+                    out.close();
+                    client.close();
+                }
+
+            }
 
         }
         catch (UnknownHostException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
-        if (client.isConnected()) {
-            try{
-                out = new DataOutputStream(client.getOutputStream());
-                System.out.println("Send Request to Server: " + input);
-                out.writeUTF(input + client.getLocalAddress());
-                out.flush();
-                client.setSoTimeout(5000);
-                in = new DataInputStream(client.getInputStream());
-                ServerResponse = in.readUTF();
-                Toast.makeText(MainActivity.this, "Translate Result: " + ServerResponse, Toast.LENGTH_SHORT).show();
-                client.close();
-            }
-            catch (UnknownHostException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
-
-        }
     }
 
 
