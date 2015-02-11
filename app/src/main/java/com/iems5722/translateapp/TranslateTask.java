@@ -64,6 +64,7 @@ public class TranslateTask extends AsyncTask<String, Void, String> {
                         in.close();
                         out.close();
                         client.close();
+                        this.activity.storageFile(input, ServerResponse);
                         return ServerResponse;
                     }
                 }
@@ -84,6 +85,7 @@ public class TranslateTask extends AsyncTask<String, Void, String> {
                 System.out.println("Get Server response!");
                 HttpEntity entity = response.getEntity();
                 ServerResponse = EntityUtils.toString(entity, HTTP.UTF_8);
+                this.activity.storageFile(input, ServerResponse);
                 return ServerResponse;
             } catch (UnknownHostException e) {
                 e.printStackTrace();

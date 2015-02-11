@@ -6,7 +6,10 @@
     <string name="submit_button">Submit</string>
     <string name="enter_a_word">Enter a word to translate to get started</string>
     <string name="share_button">Share</string>
+    <string name="history_button">History</string>
     <string name="tcp_submit_button">TCP Submit</string>
     <string name="http_submit_button">HTTP Submit</string>
+    <string name="title_activity_translate_histories">Translate History</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

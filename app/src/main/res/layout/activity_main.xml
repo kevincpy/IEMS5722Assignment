@@ -67,6 +67,13 @@
         android:textAlignment="center"
         android:textSize="24dp" />
 
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/history_button"
+        android:textAlignment="center"
+        android:textSize="24dp" />
 
 
 </LinearLayout>
