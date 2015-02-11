@@ -30,7 +30,7 @@ public class TranslateTask extends AsyncTask<String, Void, String> {
         ConnectionDetector cd = new ConnectionDetector(activity.getApplicationContext());
         String mode = Strings[0];
         String input = Strings[1];
-        String ServerResponse = "";
+        String ServerResponse;
 
         if (input.trim().equals("")) {
             return "Empty Input";
@@ -64,7 +64,9 @@ public class TranslateTask extends AsyncTask<String, Void, String> {
                         in.close();
                         out.close();
                         client.close();
-                        this.activity.storageFile(input, ServerResponse);
+                        if (!ServerResponse.equals("Translate Error")) {
+                            this.activity.storageFile(input, ServerResponse);
+                        }
                         return ServerResponse;
                     }
                 }
@@ -85,7 +87,10 @@ public class TranslateTask extends AsyncTask<String, Void, String> {
                 System.out.println("Get Server response!");
                 HttpEntity entity = response.getEntity();
                 ServerResponse = EntityUtils.toString(entity, HTTP.UTF_8);
-                this.activity.storageFile(input, ServerResponse);
+                if (!ServerResponse.equals("Translate Error")) {
+                    this.activity.storageFile(input, ServerResponse);
+                }
+
                 return ServerResponse;
             } catch (UnknownHostException e) {
                 e.printStackTrace();

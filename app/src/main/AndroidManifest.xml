@@ -28,8 +28,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".translate_histories"
-            android:label="@string/title_activity_translate_histories"
+            android:name=".History"
+            android:label="@string/title_activity_history"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

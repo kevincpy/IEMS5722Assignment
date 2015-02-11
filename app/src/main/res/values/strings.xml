@@ -9,7 +9,6 @@
     <string name="history_button">History</string>
     <string name="tcp_submit_button">TCP Submit</string>
     <string name="http_submit_button">HTTP Submit</string>
-    <string name="title_activity_translate_histories">Translate History</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_history">History Page</string>
 
 </resources>

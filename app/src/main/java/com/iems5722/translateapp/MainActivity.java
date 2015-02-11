@@ -3,7 +3,6 @@ package com.iems5722.translateapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
@@ -14,21 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
-
-import java.io.BufferedReader;
 import java.io.FileOutputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
@@ -91,7 +76,7 @@ public class MainActivity extends Activity {
                     @Override
                     public void onClick(View view) {
                         Intent historyAct = new Intent();
-                        historyAct.setClass(MainActivity.this, translate_histories.class);
+                        historyAct.setClass(MainActivity.this, History.class);
                         startActivity(historyAct);
                         MainActivity.this.finish();
                     }
@@ -117,6 +102,7 @@ public class MainActivity extends Activity {
 
         if (word != null) {
             t1.setText(word);
+            storageFile(input, word);
             return;
         } else {
             Toast.makeText(MainActivity.this, "Translate Error", Toast.LENGTH_SHORT).show();
@@ -157,12 +143,12 @@ public class MainActivity extends Activity {
     }
 
     public void storageFile(String word, String result) {
-        String FILENAME = "translate_histories";
-        String record = word + ": " + result;
+        String FILENAME = "translate_history";
+        String record = word + ": " + result + "\n";
         try {
-            FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-            fos.write(record.getBytes());
-            fos.close();
+            FileOutputStream fileOutputStream = openFileOutput(FILENAME, Context.MODE_APPEND);
+            fileOutputStream.write(record.getBytes());
+            fileOutputStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
