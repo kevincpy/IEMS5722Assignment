@@ -38,13 +38,17 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f050000;
         public static final int app_name=0x7f050001;
-        public static final int enter_a_word=0x7f050002;
-        public static final int history_button=0x7f050003;
-        public static final int http_submit_button=0x7f050004;
-        public static final int share_button=0x7f050005;
-        public static final int submit_button=0x7f050006;
-        public static final int tcp_submit_button=0x7f050007;
-        public static final int title_activity_history=0x7f050008;
+        public static final int delete_history=0x7f050002;
+        public static final int delete_history_dialog=0x7f050003;
+        public static final int enter_a_word=0x7f050004;
+        public static final int history_button=0x7f050005;
+        public static final int http_submit_button=0x7f050006;
+        public static final int no=0x7f050007;
+        public static final int share_button=0x7f050008;
+        public static final int submit_button=0x7f050009;
+        public static final int tcp_submit_button=0x7f05000a;
+        public static final int title_activity_history=0x7f05000b;
+        public static final int yes=0x7f05000c;
     }
     public static final class style {
         /** 

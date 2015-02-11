@@ -10,5 +10,9 @@
     <string name="tcp_submit_button">TCP Submit</string>
     <string name="http_submit_button">HTTP Submit</string>
     <string name="title_activity_history">History Page</string>
+    <string name="delete_history">Delete History</string>
+    <string name="delete_history_dialog">Delete this translate record?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>

@@ -29,7 +29,7 @@ public class History extends ListActivity {
         super.onCreate(savedInstanceState);
 
         String FILENAME = "translate_history";
-        ArrayList<String> record_list = new ArrayList<String>();
+        final ArrayList<String> record_list = new ArrayList<String>();
 
         try {
                 FileInputStream fileInputStream = openFileInput(FILENAME);
@@ -38,13 +38,15 @@ public class History extends ListActivity {
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
                     record_list.add(line);
+                }
+                bufferedReader.close();
+                inputStreamReader.close();
+                fileInputStream.close();
+            }catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-        }catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
 
 
@@ -54,8 +56,14 @@ public class History extends ListActivity {
         getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle args = new Bundle();
+                String current_record = ((TextView) view).getText().toString();
+                args.putStringArrayList("record_list", record_list);
+                args.putString("record", current_record);
+                DeleteHistoryDialog deleteHistoryDialog = new DeleteHistoryDialog();
+                deleteHistoryDialog.setArguments(args);
+                deleteHistoryDialog.show(getFragmentManager(), "dialog");
 
-                Toast.makeText(getApplicationContext(), ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
