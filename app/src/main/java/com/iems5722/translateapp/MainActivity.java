@@ -137,7 +137,7 @@ public class MainActivity extends Activity {
     private void TranslateJob(String mode) {
         String input = e1.getText().toString();
 
-        new TranslateTask().execute(mode, input);
+        new TranslateTask(MainActivity.this).execute(mode, input);
 
     }
 
@@ -161,93 +161,4 @@ public class MainActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    private class TranslateTask extends AsyncTask<String, Void, String> {
-        //final ProgressDialog ringProgressDialog = new ProgressDialog(MainActivity.this);
-        protected String doInBackground(String... Strings) {
-            ConnectionDetector cd = new ConnectionDetector(getApplicationContext());
-            String mode = Strings[0];
-            String input = Strings[1];
-            String ServerResponse = "";
-
-            if (input.trim().equals("")) {
-                return "Empty Input";
-            }
-
-
-            Boolean isInternetPresent = cd.isConnectingToInternet();
-            if (!isInternetPresent){
-                System.out.println("Can't connect to internet");
-                return "Can't connect to internet";
-
-            }
-            System.out.println("Mode: " + mode);
-            if (mode.equals("tcp")) {
-                String hostname = "iems5722v.ie.cuhk.edu.hk";
-                int serverPort = 3001;
-                System.out.println("Try connected to " + hostname + " : " + serverPort);
-                try {
-                    Socket client = new Socket(hostname, serverPort);
-                    System.out.println("Just connected to " + client.getRemoteSocketAddress());
-                    if (client.isConnected()) {
-                        PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-                        System.out.println("Send Request to Server: " + input);
-                        out.print(input);
-                        out.flush();
-                        client.setSoTimeout(5000);
-                        BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-                        while (!in.ready()) {
-                            ServerResponse = in.readLine();
-                            System.out.println("Translate Result: " + ServerResponse);
-                            in.close();
-                            out.close();
-                            client.close();
-                            return ServerResponse;
-                        }
-                    }
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-            if (mode.equals("http")) {
-                String url = "http://iems5722v.ie.cuhk.edu.hk:8080/translate.php?word=" + input;
-                System.out.println("URL: " + url);
-                HttpClient http_client = new DefaultHttpClient();
-                HttpGet request = new HttpGet(url);
-                try {
-                    HttpResponse response = http_client.execute(request);
-                    System.out.println("Get Server response!");
-                    HttpEntity entity = response.getEntity();
-                    ServerResponse = EntityUtils.toString(entity, HTTP.UTF_8);
-                    return ServerResponse;
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-            return null;
-        }
-
-        protected void onPostExecute(String result) {
-            if (result.equals("Empty Input") || result.equals("Can't connect to internet") ) {
-                Toast.makeText(MainActivity.this, result, Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (result.equals("Translate Error")) {
-                Toast.makeText(MainActivity.this, result, Toast.LENGTH_SHORT).show();
-                t1.setText(result);
-                return;
-            }
-            t1.setText(result);
-            return;
-
-        }
-    }
-
 }
