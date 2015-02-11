@@ -1,29 +1,57 @@
 package com.iems5722.translateapp;
 
-import android.app.Activity;
+
 import android.app.ListActivity;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.ArrayAdapter;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 
-public class translate_histories extends ListActivity {
+public class History extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_translate_histories);
-        ListView listView = getListView();
-        listView.setTextFilterEnabled(true);
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        String FILENAME = "translate_history";
+        ArrayList<String> record_list = new ArrayList<String>();
+
+        try {
+                FileInputStream fileInputStream = openFileInput(FILENAME);
+                InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    record_list.add(line);
+            }
+
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+        setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, record_list));
+        getListView().setTextFilterEnabled(true);
+
+        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
